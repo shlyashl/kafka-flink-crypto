@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="Black">
-    <option name="sdkName" value="Remote Python 3.12.3 (sftp://ch@94.102.127.53:22/home/ch/.virtualenvs/kafka-flink-crypto/bin/python)" />
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (kafka-flink-crypto)" project-jdk-type="Python SDK" />
-</project>
