@@ -1,37 +1,8 @@
-from kafka import KafkaProducer
 import json
-from logger import log
-
-
-class KafkaMessageProducer:
-    def __init__(self, bootstrap_servers: str, topic: str):
-        self.producer = KafkaProducer(
-            bootstrap_servers=bootstrap_servers,
-            value_serializer=lambda v: json.dumps(v).encode('utf-8')
-        )
-        self.topic = topic
-        log.info(f"producer initialized for topic '{topic}'.")
-
-    def send_message(self, message: dict):
-        try:
-            self.producer.send(self.topic, message)
-            log.info(f"message sent to Kafka topic '{self.topic}': {message}")
-        except Exception as e:
-            log.error(f"failed to send message to Kafka: {e}")
-
-    def close(self):
-        self.producer.close()
-        log.info("producer closed")
-
-
-
-
-
-
 from kafka import KafkaProducer, KafkaAdminClient
 from kafka.admin import NewTopic
-import json
 from logger import log
+
 
 class KafkaMessageProducer:
     def __init__(self, bootstrap_servers: str, topic: str):
