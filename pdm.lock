@@ -5,10 +5,21 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:529d49c766282be2337dc1ad2bc8630e715dc0113afeb72e5aa761d9159781a2"
+content_hash = "sha256:a8c7d9f64b6376d4b13f1c8c691239548f40a14880f05f91fcc9fdc47754c3ae"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
+
+[[package]]
+name = "kafka-python-ng"
+version = "2.2.3"
+requires_python = ">=3.8"
+summary = "Pure Python client for Apache Kafka"
+groups = ["default"]
+files = [
+    {file = "kafka_python_ng-2.2.3-py2.py3-none-any.whl", hash = "sha256:adc6e82147c441ca4ae1f22e291fc08efab0d10971cbd4aa1481d2ffa38e9480"},
+    {file = "kafka_python_ng-2.2.3.tar.gz", hash = "sha256:f79f28e10ade9b5a9860b2ec15b7cc8dc510d5702f5a399430478cff5f93a05a"},
+]
 
 [[package]]
 name = "websocket-client"

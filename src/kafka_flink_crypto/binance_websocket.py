@@ -1,6 +1,7 @@
 import json
 import websocket
 from logger import log
+from kafka_producer import KafkaMessageProducer
 
 
 class BinanceWebSocket:
@@ -8,12 +9,19 @@ class BinanceWebSocket:
     def __init__(self, url):
         self.url = url
         self.ws = None
+        self.producer = KafkaMessageProducer(bootstrap_servers="kafka:9092", topic="binance-data")
 
     def _on_open(self, ws):
+        ws.send(json.dumps({
+            "method": "SUBSCRIBE",
+            "params": ["btcusdt@depth5@100ms"],
+            "id": 1
+        }))
         log.info("connected")
 
     def _on_message(self, ws, message):
         data = json.loads(message)
+        self.producer.send_message(data)
         log.info(f"{data=}")
 
     def _on_error(self, ws, error):
@@ -21,6 +29,7 @@ class BinanceWebSocket:
 
     def _on_close(self, ws, close_status_code, close_msg):
         log.warning(f"connection closed: {close_status_code=}, {close_msg=}")
+        self.producer.close()
 
     def run(self):
         self.ws = websocket.WebSocketApp(
