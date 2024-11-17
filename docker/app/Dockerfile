@@ -9,5 +9,5 @@ COPY docker/app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-# CMD ["python", "-m", "binance_websocket"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["python", "-m", "binance_websocket"]
+# CMD ["tail", "-f", "/dev/null"]
