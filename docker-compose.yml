@@ -55,5 +55,17 @@ services:
       - ch
     restart: unless-stopped
 
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: kafka-flink-crypto
+    environment:
+      - KAFKA_BROKER=kafka:9092
+    depends_on:
+      - kafka
+    ports:
+      - "5000:5000"
+
 networks:
   ch:
