@@ -1,0 +1,57 @@
+services:
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - ch
+    restart: unless-stopped
+
+  kafka:
+    build:
+      context: ./docker/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092
+    depends_on:
+      - zookeeper
+    networks:
+      - ch
+    restart: unless-stopped
+
+  flink-jobmanager:
+    build:
+      context: ./docker/flink
+    container_name: flink-jobmanager
+    ports:
+      - "8081:8081"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=flink-jobmanager
+    command: jobmanager
+    depends_on:
+      - kafka
+    networks:
+      - ch
+    restart: unless-stopped
+
+  flink-taskmanager:
+    build:
+      context: ./docker/flink
+    container_name: flink-taskmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=flink-jobmanager
+    command: taskmanager
+    depends_on:
+      - flink-jobmanager
+    networks:
+      - ch
+    restart: unless-stopped
+
+networks:
+  ch:

@@ -4,6 +4,7 @@ from logger import log
 
 
 class BinanceWebSocket:
+
     def __init__(self, url):
         self.url = url
         self.ws = None
